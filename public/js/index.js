@@ -5,10 +5,10 @@ socket.on('connect',function () {
     //     to:'qwerty@example.com',
     //     text:'random'
     // });
-    socket.emit('createMessage',{
-        to:'qwerty@example.com',
-        text:'random'
-    });
+    // socket.emit('createMessage',{
+    //     to:'qwerty@example.com',
+    //     text:'random'
+    // });
 });
 
 socket.on('disconnect',function(){
