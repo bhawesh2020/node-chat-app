@@ -97,7 +97,7 @@ socket.on('newMessage',function (data) {
 
 jQuery('#message-form').on('submit',function(e){
     e.preventDefault();
-    
+    var params=jQuery.deparam(window.location.search);
     var messageTextBox=jQuery('[name=message]');
 
     socket.emit('createMessage',{
