@@ -23,6 +23,11 @@ io.on('connection',(socket)=>{
         if(!isRealString(params.name) || !isRealString(params.room)){
             return callback('Name and room name are required');
         }
+        params.room=params.room.toLowerCase();
+        var userList=users.getUserList(params.room).filter((name)=>name === params.name);
+        if(userList.length>0){
+            return callback('Username already exists');
+        }
         socket.join(params.room);
         users.removeUser(socket.id);
         users.addUser(socket.id,params.name,params.room);
@@ -32,6 +37,9 @@ io.on('connection',(socket)=>{
         socket.emit('newMessage',generateMessage('admin','welcome to chat app'));
         
         socket.broadcast.to(params.room).emit('newMessage',generateMessage('admin',`${params.name} has joined`));
+
+        socket.broadcast.emit('updateRoomList',users.getRooms());
+
         callback();
     });
 
@@ -71,6 +79,11 @@ io.on('connection',(socket)=>{
         if(user){
             io.to(user.room).emit('newLocationMessage',generateLocationMessage(user.name,coords.latitude,coords.longitude));
         }
+    });
+
+    socket.on('newIncomingRequest',()=>{
+        console.log('newIncomingRequest');
+        socket.emit('updateRoomList',users.getRooms());
     });
 
     socket.on('disconnect',()=>{

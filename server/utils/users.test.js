@@ -31,6 +31,10 @@ describe('Users',()=>{
         expect(users.users).toEqual([user]);
     });
 
+    it('should display all the rooms',()=>{
+        expect(users.getRooms()).toEqual(['A','B']);
+    });
+
     it('should remove a user',()=>{
         var id='qe2';
         var res=users.removeUser(id);

@@ -1,3 +1,4 @@
+const _=require('lodash');
 class Users{
     constructor(){
         this.users=[];
@@ -27,6 +28,16 @@ class Users{
         var result= this.users.filter((user)=>  user.room === room);
         var namesArray=result.map((user)=>user.name);
         return namesArray;
+    }
+
+    getRooms(){
+        var rooms=[];
+        var users=this.users;
+        users.forEach((user)=>{
+            rooms.push(user.room);
+        });
+        rooms=_.uniq(rooms);
+        return rooms;
     }
 }
 
